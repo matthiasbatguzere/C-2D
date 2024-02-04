@@ -11,12 +11,14 @@ int main() {
     std::vector<Projectile> projectiles;
     sf::Clock clock;
     sf::Time lastFrameTime = sf::Time::Zero;
+    sf::Time shootCooldown = sf::seconds(0.5f);
+    sf::Clock shootClock;
 
-    int enemyRowCount = 5;
+    int enemyRowCount = 2;
     int enemyColumnCount = 10;
     float enemySpacing = 50.0f;
     float startX = 100.0f;
-    float startY = 100.0f;
+    float startY = 50.0f;
 
     for (int row = 0; row < enemyRowCount; ++row) {
         for (int col = 0; col < enemyColumnCount; ++col) {
@@ -38,14 +40,21 @@ int main() {
             }
         }
 
+        // Déplacement du joueur
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             player.moveLeft(deltaTime.asSeconds());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             player.moveRight(deltaTime.asSeconds());
         }
+
+        // Tir du joueur
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            player.shoot(currentTime);
+            sf::Time elapsedTime = shootClock.getElapsedTime();
+            if (elapsedTime >= shootCooldown) {
+                projectiles.push_back(Projectile(player.getPosition().x, player.getPosition().y));
+                shootClock.restart();
+            }
         }
 
         for (auto& projectile : projectiles) {

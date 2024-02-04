@@ -1,7 +1,11 @@
 #include "player.h"
+#include "projectile.h"
 
 Player::Player(float startX, float startY, float playerSpeed)
     : position(startX, startY), speed(playerSpeed) {}
+
+void Player::update(float deltaTime) {
+}
 
 void Player::moveLeft(float deltaTime) {
     position.x -= speed * deltaTime;
@@ -20,10 +24,15 @@ void Player::moveRight(float deltaTime) {
 
 void Player::shoot(const sf::Time& currentTime) {
     sf::Time elapsedTime = shotClock.getElapsedTime();
-    if (elapsedTime >= sf::seconds(1.0)) {
+    if (elapsedTime >= sf::seconds(0.5)) {
         projectiles.push_back(Projectile(position.x, position.y));
         shotClock.restart();
     }
+}
+
+bool Player::canShoot() const {
+    sf::Time elapsedTime = shotClock.getElapsedTime();
+    return elapsedTime >= sf::seconds(0.5);
 }
 
 const std::vector<Projectile>& Player::getProjectiles() const {

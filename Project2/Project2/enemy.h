@@ -11,12 +11,12 @@ public:
     void update(float deltaTime);
     const sf::CircleShape& getShape() const;
     sf::Vector2f getPosition() const;
-    bool isMarkedForDestruction() const; 
-    void markForDestruction(); 
+    void markForDestruction();  // Ajout de la méthode
+    bool isMarkedForDestruction() const;
 
 private:
     sf::Vector2f position;
     float speed;
-    bool markedForDestruction; 
     sf::CircleShape shape;
+    bool isDestroyed;  // Nouvelle variable
 };

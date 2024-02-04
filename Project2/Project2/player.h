@@ -7,9 +7,11 @@
 class Player {
 public:
     Player(float startX, float startY, float playerSpeed);
+    void update(float deltaTime);
     void moveLeft(float deltaTime);
     void moveRight(float deltaTime);
-    void shoot(const sf::Time& currentTime); 
+    void shoot(const sf::Time& currentTime);
+    bool canShoot() const;
     const std::vector<Projectile>& getProjectiles() const;
     std::vector<Projectile>& getProjectiles();
     sf::Vector2f getPosition() const;
@@ -17,6 +19,6 @@ public:
 private:
     sf::Vector2f position;
     float speed;
-    std::vector<Projectile> projectiles;
     sf::Clock shotClock;
+    std::vector<Projectile> projectiles;
 };

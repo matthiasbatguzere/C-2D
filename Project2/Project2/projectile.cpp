@@ -1,7 +1,7 @@
 #include "projectile.h"
 
 Projectile::Projectile(float startX, float startY)
-    : position(startX, startY), speed(500.0f) {
+    : position(startX, startY), speed(500.0f), markedForDestruction(false) {
     shape.setRadius(5.0f);
     shape.setFillColor(sf::Color::White);
     shape.setOrigin(5.0f, 5.0f);
@@ -26,10 +26,9 @@ bool Projectile::collidesWith(const sf::FloatRect& otherBounds) const {
 }
 
 bool Projectile::isMarkedForDestruction() const {
-  
-    return false; 
+    return markedForDestruction;
 }
 
 void Projectile::markForDestruction() {
-    
+    markedForDestruction = true;
 }
